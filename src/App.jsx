@@ -6,8 +6,7 @@ import Home from "./pages/home/Home";
 import SignIn from "./pages/signin-signup/SignIn";
 import Product from "./pages/product/Product";
 import SignUp from "./pages/signin-signup/SIgnUp";
-import Dashobard from "./dashboard/Dashboard";
-
+import Dashobard from "./pages/dashboard/Dashboard";
 function App() {
   return (
     <div>

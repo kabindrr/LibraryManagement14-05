@@ -3,6 +3,8 @@ import { DefaultLayout } from "../../components/layout/DefaultLayout";
 import { Row, Col, Form } from "react-bootstrap";
 import { CustomInput } from "../../components/customInpute/CustomInput";
 import { Button } from "react-bootstrap";
+import { toast } from "react-toastify";
+import { postNewUser } from "../../helpers/axiosHelper";
 
 const SignUp = () => {
   const [form, setForm] = useState({});
@@ -11,27 +13,42 @@ const SignUp = () => {
   const handleOnChange = (e) => {
     const { name, value } = e.target;
 
-    setError("");
-    if (name === confirmPassword) {
-      form.password !== value && setError("Password must Match");
+    // setError("");
+    // if (name === confirmPassword) {
+    //   form.password !== value && setError("Password must Match");
 
-      form.password < 6 && setError("Password must be 6 Character Long");
-    }
+    //   form.password.length > 6 && setError("Password must be 5 Character Long");
+    // }
 
-    if (name === "confirmPassword") {
-      !/(a-z)/.test(form.password) && setError("Must Have atleast 1 lowercase");
-      !/(A-Z)/.test(form.password) && setError("Must Have atleast 1 Uppercase");
-      !/(0-9)/.test(form.password) && setError("Must Have atleast 1 number");
-    }
+    // if (name === "confirmPassword") {
+    //   !/(a-z)/.test(form.password) && setError("Must Have atleast 1 lowercase");
+    //   !/(A-Z)/.test(form.password) && setError("Must Have atleast 1 Uppercase");
+    //   !/(0-9)/.test(form.password) && setError("Must Have atleast 1 number");
+    // }
 
-    if (name === "password" && form.confirmPassword) {
-      form.confirmPassword !== value && setError("Password do not Match");
-    }
+    // if (name === "password" && form.confirmPassword) {
+    //   form.confirmPassword !== value && setError("Password do not Match");
+    // }
 
     setForm({ ...form, [name]: value });
   };
 
-  const handleOnSubmit = (e) => {};
+  const handleOnSubmit = async (e) => {
+    e.preventDefault();
+
+    const { confirmPassword, ...rest } = form;
+    if (confirmPassword !== rest.password) {
+      return alert("password do not match");
+    }
+
+    const responsePending = postNewUser(rest);
+    toast.promise(responsePending, {
+      pending: "please wait.....",
+    });
+
+    const { status, message } = await responsePending;
+    toast[status](message);
+  };
 
   const inputs = [
     {
@@ -97,7 +114,9 @@ const SignUp = () => {
               </ul>
             </div>
             <div className="d-grid">
-              <Button type="submit">Submit</Button>
+              <Button type="submit" onClick={handleOnSubmit}>
+                Submit
+              </Button>
             </div>
           </Form>
         </Col>
