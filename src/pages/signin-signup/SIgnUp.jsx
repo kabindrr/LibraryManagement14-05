@@ -13,23 +13,6 @@ const SignUp = () => {
   const handleOnChange = (e) => {
     const { name, value } = e.target;
 
-    // setError("");
-    // if (name === confirmPassword) {
-    //   form.password !== value && setError("Password must Match");
-
-    //   form.password.length > 6 && setError("Password must be 5 Character Long");
-    // }
-
-    // if (name === "confirmPassword") {
-    //   !/(a-z)/.test(form.password) && setError("Must Have atleast 1 lowercase");
-    //   !/(A-Z)/.test(form.password) && setError("Must Have atleast 1 Uppercase");
-    //   !/(0-9)/.test(form.password) && setError("Must Have atleast 1 number");
-    // }
-
-    // if (name === "password" && form.confirmPassword) {
-    //   form.confirmPassword !== value && setError("Password do not Match");
-    // }
-
     setForm({ ...form, [name]: value });
   };
 
@@ -37,6 +20,7 @@ const SignUp = () => {
     e.preventDefault();
 
     const { confirmPassword, ...rest } = form;
+    console.log(confirmPassword, rest.password);
     if (confirmPassword !== rest.password) {
       return alert("password do not match");
     }
@@ -56,14 +40,14 @@ const SignUp = () => {
       name: "fName",
       type: "text",
       required: true,
-      placeholder: "Sam",
+      placeholder: "firstname",
     },
     {
       label: "Last Name",
       name: "lName",
       type: "text",
       required: true,
-      placeholder: "Whisker",
+      placeholder: "lastname",
     },
     {
       label: "Phone",
@@ -88,7 +72,7 @@ const SignUp = () => {
     },
     {
       label: "Confirm Password",
-      name: "confirm password",
+      name: "confirmPassword",
       type: "password",
       required: true,
       placeholder: "*********",
