@@ -92,11 +92,11 @@ const SignUp = () => {
               <CustomInput key={i} {...input} onChange={handleOnChange} />
             ))}
 
-            <div className="my-3">
+            {/* <div className="my-3">
               <ul>
                 <li className="text-danger fw-bolder">{error}</li>
               </ul>
-            </div>
+            </div> */}
             <div className="d-grid">
               <Button type="submit" onClick={handleOnSubmit}>
                 Submit

@@ -3,11 +3,12 @@ import { DefaultLayout } from "../../components/layout/DefaultLayout";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { CustomInput } from "../../components/customInpute/CustomInput";
 import { toast } from "react-toastify";
+import { loginUser } from "../../helpers/axiosHelper";
 const SignIn = () => {
   const emailRef = useRef("");
   const passRef = useRef("");
 
-  const handleOnSubmit = (e) => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
     const email = emailRef.current.value;
     const password = passRef.current.value;
@@ -15,6 +16,14 @@ const SignIn = () => {
     if (!email || !password) {
       return toast.error("Both Field must be filled");
     }
+
+    const { status, message, tokens } = await loginUser({ email, password });
+    toast[status](message);
+
+    //store tokens in the sessions
+
+    sessionStorage.setItem("accessJWT", tokens.accessJWT);
+    localStorage.setItem("refreshJWT", tokens.refreshJWT);
   };
 
   const inputs = [
